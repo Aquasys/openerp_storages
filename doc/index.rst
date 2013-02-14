@@ -6,6 +6,14 @@
 Welcome to OpenERP Storages's documentation!
 ============================================
 
+.. toctree::
+    :hidden:
+
+    release_notes
+
+:doc:`release notes </release_notes>`
+
+
 Contents:
 
 .. toctree::
