@@ -17,8 +17,9 @@ Welcome to OpenERP Storages's documentation!
 Contents:
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
+    Installation/0_title
 
 
 Indices and tables

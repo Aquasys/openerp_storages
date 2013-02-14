@@ -286,4 +286,7 @@ epub_copyright = u'2013, Aquasys G.K.'
 
 
 # Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'http://docs.python.org/': None}
+intersphinx_mapping = {
+    #'doc_openerp': ('http://doc.erp.aquasys.co.jp', None),
+    #'doc_aquasys': ('http://doc.aquasys.co.jp', None),
+}
