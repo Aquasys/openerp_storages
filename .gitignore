@@ -1,0 +1,6 @@
+.venv
+*.dot
+*.pyc
+*.swp
+*.swo
+_build
