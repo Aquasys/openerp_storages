@@ -1,0 +1,189 @@
+%PDF-1.4
+%“Œ‹ž ReportLab Generated PDF document http://www.reportlab.com
+% 'BasicFonts': class PDFDictionary 
+1 0 obj
+% The standard fonts dictionary
+<< /F1 2 0 R
+ /F2 3 0 R
+ /F3 4 0 R
+ /F4 5 0 R >>
+endobj
+% 'F1': class PDFType1Font 
+2 0 obj
+% Font Helvetica
+<< /BaseFont /Helvetica
+ /Encoding /WinAnsiEncoding
+ /Name /F1
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'F2': class PDFType1Font 
+3 0 obj
+% Font Helvetica-Bold
+<< /BaseFont /Helvetica-Bold
+ /Encoding /WinAnsiEncoding
+ /Name /F2
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'F3': class PDFType1Font 
+4 0 obj
+% Font Courier-Bold
+<< /BaseFont /Courier-Bold
+ /Encoding /WinAnsiEncoding
+ /Name /F3
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'F4': class PDFType1Font 
+5 0 obj
+% Font Courier
+<< /BaseFont /Courier
+ /Encoding /WinAnsiEncoding
+ /Name /F4
+ /Subtype /Type1
+ /Type /Font >>
+endobj
+% 'Page1': class PDFPage 
+6 0 obj
+% Page dictionary
+<< /Contents 10 0 R
+ /MediaBox [ 0
+ 0
+ 595.2756
+ 841.8898 ]
+ /Parent 9 0 R
+ /Resources << /Font 1 0 R
+ /ProcSet [ /PDF
+ /Text
+ /ImageB
+ /ImageC
+ /ImageI ] >>
+ /Rotate 0
+ /Trans <<  >>
+ /Type /Page >>
+endobj
+% 'R7': class PDFCatalog 
+7 0 obj
+% Document Root
+<< /Outlines 11 0 R
+ /PageLabels 12 0 R
+ /PageMode /UseNone
+ /Pages 9 0 R
+ /Type /Catalog >>
+endobj
+% 'R8': class PDFInfo 
+8 0 obj
+<< /Author ()
+ /CreationDate (D:20130219175933-09'00')
+ /Creator (\(unspecified\))
+ /Keywords ()
+ /Producer (ReportLab PDF Library - www.reportlab.com)
+ /Subject (\(unspecified\))
+ /Title (OpenERP Storages) >>
+endobj
+% 'R9': class PDFPages 
+9 0 obj
+% page tree
+<< /Count 1
+ /Kids [ 6 0 R ]
+ /Type /Pages >>
+endobj
+% 'R10': class PDFStream 
+10 0 obj
+% page stream
+<< /Length 1414 >>
+stream
+1 0 0 1 0 0 cm  BT /F1 12 Tf 14.4 TL ET
+q
+1 0 0 1 62.69291 741.0236 cm
+q
+0 0 0 rg
+BT 1 0 0 1 0 4 Tm /F2 20 Tf 24 TL 143.2549 0 Td (OpenERP Storages) Tj T* -143.2549 0 Td ET
+Q
+Q
+q
+1 0 0 1 62.69291 719.0236 cm
+q
+BT 1 0 0 1 0 2 Tm 12 TL /F1 10 Tf 0 0 0 rg (Please browse the Sphinx doc for initial instructions) Tj T* ET
+Q
+Q
+q
+1 0 0 1 62.69291 637.8236 cm
+q
+q
+1 0 0 1 0 0 cm
+q
+1 0 0 1 6.6 6.6 cm
+q
+.662745 .662745 .662745 RG
+.5 w
+.960784 .960784 .862745 rg
+n -6 -6 468.6898 72 re B*
+Q
+q
+.960784 .960784 .862745 rg
+n 0 48.75 6 12 re f*
+.960784 .960784 .862745 rg
+n 12 48.75 18 12 re f*
+.960784 .960784 .862745 rg
+n 0 36.75 6 12 re f*
+.960784 .960784 .862745 rg
+n 0 24.75 156 12 re f*
+.960784 .960784 .862745 rg
+n 0 12.75 156 12 re f*
+.960784 .960784 .862745 rg
+n 0 .75 156 12 re f*
+BT 1 0 0 1 0 50 Tm 12 TL /F3 10 Tf 0 0 .501961 rg ($) Tj /F4 10 Tf 0 0 0 rg ( ) Tj 0 .501961 0 rg (cd ) Tj 0 0 0 rg (doc/) Tj T* /F3 10 Tf 0 0 .501961 rg ($) Tj /F4 10 Tf 0 0 0 rg ( mkvirtualenv -p python2.7 openerp_storages-sphinx) Tj T* /F3 10 Tf 0 0 .501961 rg (\(openerp_storages-sphinx\)$) Tj /F4 10 Tf 0 0 0 rg ( pip install -r requirements.txt) Tj T* /F3 10 Tf 0 0 .501961 rg (\(openerp_storages-sphinx\)$) Tj /F4 10 Tf 0 0 0 rg ( make html) Tj T* /F3 10 Tf 0 0 .501961 rg (\(openerp_storages-sphinx\)$) Tj /F4 10 Tf 0 0 0 rg ( xdg-open _build/html/index.html) Tj T* ET
+Q
+Q
+Q
+Q
+Q
+ 
+endstream
+endobj
+% 'R11': class PDFOutlines 
+11 0 obj
+<< /Count 0
+ /Type /Outlines >>
+endobj
+% 'R12': class PDFPageLabels 
+12 0 obj
+% Document Root
+<< /Nums [ 0
+ 13 0 R ] >>
+endobj
+% 'R13': class PDFPageLabel 
+13 0 obj
+% None
+<< /S /D
+ /St 1 >>
+endobj
+xref
+0 14
+0000000000 65535 f
+0000000113 00000 n
+0000000245 00000 n
+0000000410 00000 n
+0000000585 00000 n
+0000000756 00000 n
+0000000915 00000 n
+0000001193 00000 n
+0000001349 00000 n
+0000001608 00000 n
+0000001714 00000 n
+0000003229 00000 n
+0000003312 00000 n
+0000003405 00000 n
+trailer
+<< /ID 
+ % ReportLab generated PDF document -- digest (http://www.reportlab.com) 
+ [(<\266Bz\376\216 \222\2254\030\210\244N-") (<\266Bz\376\216 \222\2254\030\210\244N-")] 
+
+ /Info 8 0 R
+ /Root 7 0 R
+ /Size 14 >>
+startxref
+3452
+%%EOF
