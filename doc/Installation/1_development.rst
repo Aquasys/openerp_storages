@@ -11,6 +11,7 @@ Initialize Git flow:
     $ git flow init
 
 Add git notes (cf `Git Notes <http://doc.erp.aquasys.co.jp/Usage/1_git.html#notes>`_)
+
 .. Add git notes (cf :ref:`Git Notes <doc_openerp:notes>`)
 .. TODO fix intersphinx_mapping authorization issue
 
