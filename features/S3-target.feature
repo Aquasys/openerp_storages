@@ -10,13 +10,13 @@ Feature: Define an AWS S3 storage target
 		And I fill the field "AWS_SECRET_ACCESS_KEY" with "<AWS_SECRET_ACCESS_KEY>"
 		When I click on "save"
 		Then I see that my information is save
-   
-	Scenario: Test connection success 
+
+	Scenario: Test connection success
 		Given I access url "/"
 		And I click on "test connection"
 		When Server sends a 200 response
 		Then I get the success message: "connection successfull to bucket"
- 
+
 	Scenario: Test connection fail
 		Given I access url "/"
 		And I click on "test connection"
