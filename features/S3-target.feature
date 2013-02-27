@@ -13,12 +13,10 @@ Feature: Define an AWS S3 storage target
 
     Scenario: Test connection success
         Given I access url "/"
-        And I click on button "Test Connection"
-        When Server sends a 200 response
-        Then I can read "Connection Successfull to bucket"
+        When I click on button "Test Connection"
+        Then I can read "Connection Successful to bucket"
 
     Scenario: Test connection fail
         Given I access url "/"
-        And I click on button "Test Connection"
-        When Server sends a 404 response
-        Then I can read "Connection unsuccesfull, Credentil are invalid"
+        When I click on button "Test Connection"
+        Then I can read "Connection unsuccessful, Credential are invalid"
