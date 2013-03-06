@@ -36,7 +36,7 @@
     'category': 'Interface',
     'summary': 'AWS S3 and FTP storage for attachment files',
     'description': """
-Manage attachments 
+Manage attachments
 ==================================================
 
 It design for store attachments in external storage
