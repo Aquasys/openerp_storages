@@ -46,7 +46,7 @@ class res_company(osv.osv):
                 'ftp_host':fields.char('FTP Host',size=128),
                 'ftp_user':fields.char('FTP User',size=128),
                 'ftp_password':fields.char('FTP Password',size=128),
-                }
+               }
 
     def test_s3_connection(self, cr, uid, ids, context={}):
         ''' method to test credentials and connection '''
@@ -54,7 +54,7 @@ class res_company(osv.osv):
             return False
         try:
             company_obj = self.browse(cr, uid, ids[0])
-            s3 = boto.connect_s3(company_obj.AWS_ACCESS_KEY_ID, company_obj.AWS_SECRET_ACCESS_KEY)
+            s3 = boto.connect_s3(company_obj.aws_access_key_id, company_obj.aws_secret_access_key)
             bucket = s3.get_bucket(company_obj.bucket)
             logging.info("Connection successful to AWS S3")
         except Exception as detail:
