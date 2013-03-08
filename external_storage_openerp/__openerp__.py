@@ -49,6 +49,8 @@ It design for store attachments in external storage
     'depends': ['base'],
     'data': [
              'company/company_view.xml',
+             'lookup/lookup_view.xml',
+             'security/ir.model.access.csv',
     ],
     'demo': [
     ],
