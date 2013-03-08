@@ -12,9 +12,9 @@
                    <field name="res_id"/>
                 </form>
             </field>
-            </record>
-            
-            <record id="lookup_view_tree" model="ir.ui.view">
+        </record>
+
+        <record id="lookup_view_tree" model="ir.ui.view">
             <field name="name">lookup.tree</field>
             <field name="model">lookup</field>
             <field name="type">tree</field>
@@ -26,6 +26,17 @@
                     <field name="res_id"/>
                 </tree>
             </field>
-            </record>	
+        </record>
+
+        <record id="action_lookup_s3" model="ir.actions.act_window">
+                <field name="name">S3 Lookup</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">lookup</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="action_lookup_s3" id="menu_s3_lookup"
+            parent="base.next_id_4"/>
     </data>
 </openerp>
