@@ -10,6 +10,8 @@
                    <field name="en_file_name"/>
                    <field name="model_id"/>
                    <field name="res_id"/>
+                   <field name="company_id" />
+                   <field name="field_name" />
                 </form>
             </field>
         </record>
@@ -24,6 +26,8 @@
                     <field name="en_file_name"/>
                     <field name="model_id"/>
                     <field name="res_id"/>
+                    <field name="company_id" />
+                    <field name="field_name" />
                 </tree>
             </field>
         </record>
@@ -34,6 +38,7 @@
                 <field name="res_model">lookup</field>
                 <field name="view_type">form</field>
                 <field name="view_mode">tree,form</field>
+                <field name="field_name" />
         </record>
 
         <menuitem action="action_lookup_s3" id="menu_s3_lookup"
