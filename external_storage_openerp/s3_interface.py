@@ -57,7 +57,6 @@ def s3_set_file(cr, obj, id, name, filename,
     '''Upload file to AWS S3 using boto
     Track log in lookup table for mapping of external
     file name to openerp record'''
-    print'__SET_SET____'
     encrypt_filename = ''
     cr.execute('select company_id from res_users where id = %s' %
                (user))
@@ -78,7 +77,6 @@ def s3_set_file(cr, obj, id, name, filename,
     file_exist = tools.misc.flatten(cr.fetchall())
     if file_exist:
         k.key = file_exist[0]
-        print'SSSSSSSSSSS', file_exist
         bucket.delete_key(k)
         cr.execute("delete from lookup where en_file_name='%s'"
                    % (file_exist[0]))
@@ -102,7 +100,6 @@ def s3_set_file(cr, obj, id, name, filename,
 
 def s3_get_file(cr, obj, i, name, user=SUPERUSER_ID, context={}, values=[]):
     ''' Download file from AWS S3 '''
-    print'____GET_GET____'
     data = ''
     cr.execute('select company_id from res_users where id = %s' %
                (user))
