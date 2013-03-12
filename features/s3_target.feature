@@ -1,5 +1,5 @@
 Feature: Define an AWS S3 storage target
-    Given I'm located in the external storage tag in OpenERP
+    Given I'm located in "external storage"
     In order to store non-tabular data in Amazon S3
     As a "system administrator"
     I want to define a bucket and credentials to use in the OpenERP admin interface
