@@ -5,9 +5,8 @@ Feature: Export functionality
     I want to be able to easily export existing non-tabular data to an external storage location.
 
     Scenario: Export attachments with remaining file in database
-        Given I check the checkbox 
-        When I click on button "export"
-        Then I can read attachments in AWS S3
+        When I click on link "Export to S3"
+        Then I can read "attachments in AWS S3"
         And I can read attachments in databse
 
     Examples:
