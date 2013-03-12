@@ -5,3 +5,4 @@ Jinja2==2.6
 pip-tools==0.2.1
 Pygments==1.6rc1
 Sphinx==1.1.3
+git+ssh://aquasys/lettuce_terrain@v0.1.4#egg=lettuce_terrain
