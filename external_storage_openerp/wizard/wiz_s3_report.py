@@ -30,10 +30,18 @@
 
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #########################################################################
-import company
-import lookup
-import attachment
-import report
-import wizard
-import product
+from openerp.osv import osv
+
+
+class s3_report(osv.osv_memory):
+    _name = 's3.report'
+
+    def action_print(self, cr, uid, ids, context={}):
+        data = []
+        return {
+            'type': 'ir.actions.report.xml',
+            'report_name': 'broken.orphan.files',
+            'datas': data,
+        }
+s3_report()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -46,11 +46,13 @@ It design for store attachments in external storage
     """,
     'author': 'Aquasys G.K.',
     'website': 'http://www.aquasys.co.jp/',
-    'depends': ['base'],
+    'depends': ['base','product'],
     'data': [
              'company/company_view.xml',
              'lookup/lookup_view.xml',
              'security/ir.model.access.csv',
+             'report/external_storage_reports.xml',
+             'wizard/wiz_s3_report_view.xml',
     ],
     'demo': [
     ],
