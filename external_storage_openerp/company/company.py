@@ -36,17 +36,19 @@ import logging
 from openerp.tools.translate import _
 from ftplib import FTP
 
+
 class res_company(osv.osv):
     ''' AWS(A3) and FTP credentials store in admin level configuration '''
     _inherit = 'res.company'
-    _columns = {
-        'aws_access_key_id': fields.char('AWS_ACCESS_KEY_ID', size=128),
-        'aws_secret_access_key': fields.char('AWS_SECRET_ACCESS_KEY', size=128),
-        'bucket': fields.char('Bucket', size=128),
-        'ftp_host': fields.char('FTP Host', size=128),
-        'ftp_user': fields.char('FTP User', size=128),
-        'ftp_password': fields.char('FTP Password', size=128),
-       }
+    _columns = {'aws_access_key_id': fields.char('AWS_ACCESS_KEY_ID',
+                                                 size=128),
+                'aws_secret_access_key': fields.char('AWS_SECRET_ACCESS_KEY',
+                                                     size=128),
+                'bucket': fields.char('Bucket', size=128),
+                'ftp_host': fields.char('FTP Host', size=128),
+                'ftp_user': fields.char('FTP User', size=128),
+                'ftp_password': fields.char('FTP Password', size=128),
+                }
 
     def test_s3_connection(self, cr, uid, ids, context={}):
         ''' method to test credentials and connection '''
@@ -56,13 +58,15 @@ class res_company(osv.osv):
             company_obj = self.browse(cr, uid, ids[0])
             s3 = boto.connect_s3(company_obj.aws_access_key_id,
                                  company_obj.aws_secret_access_key)
-            bucket = s3.get_bucket(company_obj.bucket)
+            s3.get_bucket(company_obj.bucket)
             logging.info("Connection successful to AWS S3")
         except Exception as detail:
             logging.error(detail)
             raise osv.except_osv(_('Connection unsuccessful'),
-                                  _('Credential are invalid'))
-        raise osv.except_osv(_('Successful'), _('Connection test Sucessful'))
+                                 _('Credential are invalid')
+                                 )
+        raise osv.except_osv(_('Successful'), _('Connection test Sucessful')
+                             )
         return True
 
     def test_ftp_connection(self, cr, uid, ids, context={}):
@@ -71,13 +75,14 @@ class res_company(osv.osv):
             return False
         try:
             company_obj = self.browse(cr, uid, ids[0])
-            ftp = FTP(company_obj.ftp_host, company_obj.ftp_user,
-                      company_obj.ftp_password)       # connect to host
+            FTP(company_obj.ftp_host, company_obj.ftp_user,
+                company_obj.ftp_password)       # connect to host
             logging.info("Connection successful to FTP")
         except Exception as detail:
             logging.error(detail)
             raise osv.except_osv(_('Connection unsuccessful'),
-                                  _('Credential are invalid'))
+                                 _('Credential are invalid')
+                                 )
         raise osv.except_osv(_('Successful'), _('Connection test Sucessful'))
         return True
 

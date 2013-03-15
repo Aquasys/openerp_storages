@@ -43,5 +43,7 @@
 
         <menuitem action="action_lookup_s3" id="menu_s3_lookup"
             parent="base.next_id_4"/>
+        
+        
     </data>
 </openerp>

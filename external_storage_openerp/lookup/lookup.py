@@ -32,16 +32,16 @@
 #########################################################################
 from openerp.osv import osv, fields
 
+
 class lookup(osv.osv):
     _name = 'lookup'
     _rec_name = 'file_name'
-    _columns = {
-        'file_name': fields.char('File Name', size=512),
-        'en_file_name': fields.char('Encrypted File Name', size=512),
-        'model_id': fields.char('Resource Model', size=256),
-        'res_id': fields.integer('Resource ID'),
-        'company_id':fields.many2one('res.company', 'Company'),
-        'field_name':fields.char('Field Name', size=256),
-        }
+    _columns = {'file_name': fields.char('File Name', size=512),
+                'en_file_name': fields.char('Encrypted File Name', size=512),
+                'model_id': fields.char('Resource Model', size=256),
+                'res_id': fields.integer('Resource ID'),
+                'company_id': fields.many2one('res.company', 'Company'),
+                'field_name': fields.char('Field Name', size=256),
+                }
 lookup()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

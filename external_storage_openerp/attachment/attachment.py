@@ -30,13 +30,12 @@
 
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #########################################################################
-
 from openerp.osv import osv, fields
+
 
 class ir_attachment(osv.osv):
     _inherit = 'ir.attachment'
-    _columns = {
-                'db_datas': fields.binary('Database Data', store='s3'),
+    _columns = {'db_datas': fields.binary('Database Data', store='s3'),
                 }
 ir_attachment()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
