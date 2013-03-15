@@ -83,7 +83,7 @@ def s3_set_file(cr, obj, id, name, filename,
     #create file name from it content for unique file name
     encrypt_filename = sha_file_naming(value)
     k.key = encrypt_filename
-    k.set_contents_from_string(base64.decodestring(value))
+    k.set_contents_from_string(base64.decodestring(value), encrypt_key=True)
     logging.info("File stored to AWS S3")
 #    except Exception as detail:
 #        logging.error(detail)
