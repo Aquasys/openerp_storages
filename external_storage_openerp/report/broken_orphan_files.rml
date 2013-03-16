@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<document filename="">
-  <template pageSize="(595.0,842.0)" title="" author="" allowSplitting="20">
+<document filename="Broken/Orphan files.pdf">
+  <template pageSize="(595.0,842.0)" title="Brokern/Orphan Files" author="Aquasys" allowSplitting="20">
     <pageTemplate id="first">
       <frame id="first" x1="0.0" y1="57.0" width="538" height="728"/>
     </pageTemplate>
@@ -193,7 +193,6 @@
     <para style="terp_default_8">[[repeatIn(get_broken_orphan(),'b') ]] </para>
       <blockTable colWidths="256.0,74.0,58.0,60.0,73.0" style="Move_Line_Contect_Assign_State">
         <tr>
-        
           <td>
             <para style="terp_default_9">[[ b['type'] or '' ]]</para>
           </td>
@@ -211,7 +210,6 @@
           </td>
         </tr>
       </blockTable>
-    
   </pto>
   </story>
 </document>
