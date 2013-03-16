@@ -40,9 +40,9 @@ from ftplib import FTP
 class res_company(osv.osv):
     ''' AWS(A3) and FTP credentials store in admin level configuration '''
     _inherit = 'res.company'
-    _columns = {'aws_access_key_id': fields.char('AWS_ACCESS_KEY_ID',
+    _columns = {'aws_access_key_id': fields.char('AWS Access Key ID',
                                                  size=128),
-                'aws_secret_access_key': fields.char('AWS_SECRET_ACCESS_KEY',
+                'aws_secret_access_key': fields.char('AWS Secret Access Key',
                                                      size=128),
                 'bucket': fields.char('Bucket', size=128),
                 'ftp_host': fields.char('FTP Host', size=128),
@@ -63,7 +63,7 @@ class res_company(osv.osv):
         except Exception as detail:
             logging.error(detail)
             raise osv.except_osv(_('Connection unsuccessful'),
-                                 _('Credential are invalid')
+                                 _('Credentials are invalid')
                                  )
         raise osv.except_osv(_('Successful'), _('Connection test Sucessful')
                              )
@@ -81,7 +81,7 @@ class res_company(osv.osv):
         except Exception as detail:
             logging.error(detail)
             raise osv.except_osv(_('Connection unsuccessful'),
-                                 _('Credential are invalid')
+                                 _('Credentials are invalid')
                                  )
         raise osv.except_osv(_('Successful'), _('Connection test Sucessful'))
         return True
