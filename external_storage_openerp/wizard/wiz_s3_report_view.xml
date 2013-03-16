@@ -20,6 +20,7 @@
                 <field name="view_mode">form</field>
                 <field name="target">new</field>
         </record>
+
         <menuitem action="action_s3_report" id="menu_report_broken_orphan"
             parent="base.next_id_4"/>
     </data>
