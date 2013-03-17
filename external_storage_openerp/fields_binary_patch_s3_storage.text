@@ -1,6 +1,6 @@
 === modified file 'openerp/osv/fields.py'
 --- openerp/osv/fields.py	2013-01-11 17:57:17 +0000
-+++ openerp/osv/fields.py	2013-03-15 03:10:14 +0000
++++ openerp/osv/fields.py	2013-03-17 09:46:43 +0000
 @@ -50,6 +50,7 @@
  from openerp.tools import html_sanitize
  import simplejson
@@ -9,37 +9,47 @@
  
  _logger = logging.getLogger(__name__)
  
-@@ -384,29 +385,42 @@
+@@ -384,29 +385,51 @@
      _classic_read = False
      _prefetch = False
  
 -    def __init__(self, string='unknown', filters=None, **args):
-+    def __init__(self, string='unknown', filters=None, store='', filename=False, **args):
++    def __init__(self, string='unknown', filters=None, store='s3', **args):
          _column.__init__(self, string=string, **args)
          self.filters = filters
-+        self.store = store
-+        if store == 's3':
-+            self._classic_write = False
-+            self._symbol_set = (self._symbol_c, self.set)
-+            self._symbol_get = None
-+            self.filename = filename
-+            
-+    def set(self, cr, obj, id, name, value, user=None, context=None):
-+        if self.store != 's3' or not value:
-+            cr.execute('update ' + obj._table + ' set'
-+                       + name + '=' + self._symbol_set[0] + ' where id=%s',
-+                       (self._symbol_set[1](value), id))
-+        else:
-+            encrypt_filename = s3_interface.s3_set_file(cr, obj, id, name, self.filename, value, user=user, context=context)
-+    
- 
+-
 -    def get(self, cr, obj, ids, name, user=None, context=None, values=None):
 -        if not context:
 -            context = {}
 -        if not values:
 -            values = []
-+    def get(self, cr, obj, ids, name, user=SUPERUSER_ID, context={}, values=[]):
++        self.store = store
++
++    def set(self, cr, obj, id, name, value, user=None, context=None):
++        cr.execute("select id from ir_model where model='lookup'")
++        s3_installed = cr.fetchall()
++        if s3_installed:
++            self._classic_write = False
++            self._symbol_set = (self._symbol_c, self.set)
++            self._symbol_get = None
++        if self.store != 's3' or not value or not s3_installed:
++            cr.execute('update ' + obj._table + ' set'
++                       + name + '=' + self._symbol_set[0] + ' where id=%s',
++                       (self._symbol_set[1](value), id))
++        else:
++            encrypt_filename = s3_interface.s3_set_file(cr,
++                                obj, id, name, value, user=user,
++                                context=context)
++
++    def get(self, cr, obj, ids, name, user=SUPERUSER_ID, context={}, 
++                                                            values=[]):
          res = {}
++        cr.execute("select id from ir_model where model='lookup'")
++        s3_installed = cr.fetchall()
++        if s3_installed:
++            self._classic_write = False
++            self._symbol_set = (self._symbol_c, self.set)
++            self._symbol_get = None
          for i in ids:
              val = None
 -            for v in values:
@@ -51,18 +61,19 @@
 -            # of the content. Presumably a separate request will be done to read the actual
 -            # content if it's needed at some point.
 -            # TODO: after 6.0 we should consider returning a dict with size and content instead of
-+            if self.store != 's3':
+-            #       having an implicit convention for the value
+-            if val and context.get('bin_size_%s' % name, context.get('bin_size')):
++            if self.store != 's3' or not s3_installed:
 +                for v in values:
 +                    if v['id'] == i:
 +                        val = v[name]
 +                        break
 +            else:
-+                data = s3_interface.s3_get_file(cr, obj, i, name, user=user, context=context, values=values)
++                data = s3_interface.s3_get_file(cr, obj, i, name, user=user,
++                                                context=context, values=values)
 +                val = base64.encodestring(data)
 +                res[i] = val
 +                continue
-             #       having an implicit convention for the value
--            if val and context.get('bin_size_%s' % name, context.get('bin_size')):
 +            if val and context.get('bin_size_%s' % name,
 +                                   context.get('bin_size')):
                  res[i] = tools.human_size(long(val))

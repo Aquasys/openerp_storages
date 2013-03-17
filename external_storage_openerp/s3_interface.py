@@ -52,7 +52,7 @@ def sha_file_naming(filename):
     return sha_object.hexdigest()
 
 
-def s3_set_file(cr, obj, id, name, filename,
+def s3_set_file(cr, obj, id, name,
                 value, user=SUPERUSER_ID, context={}):
     '''Upload file to AWS S3 using boto
     Track log in lookup table for mapping of external
