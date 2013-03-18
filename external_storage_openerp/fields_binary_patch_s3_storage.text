@@ -1,6 +1,6 @@
 === modified file 'openerp/osv/fields.py'
 --- openerp/osv/fields.py	2013-01-11 17:57:17 +0000
-+++ openerp/osv/fields.py	2013-03-17 09:46:43 +0000
++++ openerp/osv/fields.py	2013-03-18 02:13:59 +0000
 @@ -50,6 +50,7 @@
  from openerp.tools import html_sanitize
  import simplejson
@@ -9,7 +9,7 @@
  
  _logger = logging.getLogger(__name__)
  
-@@ -384,29 +385,51 @@
+@@ -384,29 +385,48 @@
      _classic_read = False
      _prefetch = False
  
@@ -24,15 +24,16 @@
 -        if not values:
 -            values = []
 +        self.store = store
-+
-+    def set(self, cr, obj, id, name, value, user=None, context=None):
-+        cr.execute("select id from ir_model where model='lookup'")
-+        s3_installed = cr.fetchall()
-+        if s3_installed:
++        if store =='s3':
 +            self._classic_write = False
 +            self._symbol_set = (self._symbol_c, self.set)
 +            self._symbol_get = None
-+        if self.store != 's3' or not value or not s3_installed:
++
++    def set(self, cr, obj, id, name, value, user=None, context=None):
++        connection_check = s3_interface.connection_test(cr, obj, id, name,
++                                      user=user, context=context)
++
++        if self.store != 's3' or not value or not connection_check:
 +            cr.execute('update ' + obj._table + ' set'
 +                       + name + '=' + self._symbol_set[0] + ' where id=%s',
 +                       (self._symbol_set[1](value), id))
@@ -44,12 +45,8 @@
 +    def get(self, cr, obj, ids, name, user=SUPERUSER_ID, context={}, 
 +                                                            values=[]):
          res = {}
-+        cr.execute("select id from ir_model where model='lookup'")
-+        s3_installed = cr.fetchall()
-+        if s3_installed:
-+            self._classic_write = False
-+            self._symbol_set = (self._symbol_c, self.set)
-+            self._symbol_get = None
++        connection_check = s3_interface.connection_test(cr, obj, id, name,
++                                      user=user, context=context)
          for i in ids:
              val = None
 -            for v in values:
@@ -63,9 +60,9 @@
 -            # TODO: after 6.0 we should consider returning a dict with size and content instead of
 -            #       having an implicit convention for the value
 -            if val and context.get('bin_size_%s' % name, context.get('bin_size')):
-+            if self.store != 's3' or not s3_installed:
++            if self.store != 's3' or not connection_check:
 +                for v in values:
-+                    if v['id'] == i:
++                    if v['id'] == i and v.has_key(name):
 +                        val = v[name]
 +                        break
 +            else:

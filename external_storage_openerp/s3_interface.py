@@ -128,3 +128,33 @@ def s3_get_file(cr, obj, i, name, user=SUPERUSER_ID, context={}, values=[]):
         logging.error(detail)
 
     return data
+
+def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
+    s3_installed = False
+    s3_connection_info = False
+    bucket = False
+    try:
+        cr.execute("select id from ir_model where model='lookup'")
+        s3_installed = cr.fetchall()
+    except Exception as detail:
+        logging.error(detail)
+    try:
+        cr.execute('select company_id from res_users where id = %s' %
+                   (user))
+        company_id = cr.fetchall()
+        company_id = tools.misc.flatten(company_id)
+        cr.execute('select aws_access_key_id,aws_secret_access_key,bucket from\
+                res_company where id = %s' % (company_id[0]))
+        s3_connection_info = tools.misc.flatten(cr.fetchall())
+    except Exception as detail:
+        logging.error(detail)
+    try:
+        s3 = boto.connect_s3(s3_connection_info[0], s3_connection_info[1])
+        bucket = s3.get_bucket(s3_connection_info[2])
+    except Exception as detail:
+        logging.error(detail)
+
+    if s3_installed and s3_connection_info and bucket:
+        return True
+    else:
+        return False
