@@ -31,4 +31,5 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #########################################################################
 import wiz_s3_report
+import wiz_export
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
