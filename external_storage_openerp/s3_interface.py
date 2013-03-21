@@ -154,15 +154,12 @@ def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
 
     @return: True or False
     '''
-    s3_installed = False
-    s3_connection_info = False
-    bucket = False
     try:
-        cr.execute("select id from ir_model where model='lookup'")
+        cr.execute("SELECT id from ir_module_module where\
+         name = 'external_storage_openerp' and state = 'installed';")
         s3_installed = cr.fetchall()
     except Exception as detail:
         logging.error(detail)
-    if not s3_installed:
         return False
     try:
         cr.execute('select company_id from res_users where id = %s' %(user))
@@ -173,13 +170,11 @@ def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
         s3_connection_info = tools.misc.flatten(cr.fetchall())
     except Exception as detail:
         logging.error(detail)
-    if not s3_connection_info:
         return False
     try:
         s3 = boto.connect_s3(s3_connection_info[0], s3_connection_info[1])
         bucket = s3.get_bucket(s3_connection_info[2])
     except Exception as detail:
         logging.error(detail)
-    if not bucket:
         return False
     return True
