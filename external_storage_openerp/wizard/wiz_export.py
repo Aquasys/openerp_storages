@@ -32,11 +32,16 @@
 #########################################################################
 
 from openerp.osv import osv, fields
-from .. import s3_interface
+from openerp.addons.external_storage_openerp import s3_interface
 import logging
 
 
 class wiz_export(osv.osv_memory):
+    ''' Export of attachments existing in openerp
+    Useful for initial export of existing database and
+    binary fields which are not storing on S3 and requirment to upload some
+    docs to export
+    '''
     _name = 'wiz.export'
     _rec_name = 'export_to'
     _columns = {
@@ -48,24 +53,27 @@ class wiz_export(osv.osv_memory):
                  }
 
     def action_external_export(self, cr, uid, ids, context={}):
-        if ids:
-            for att_id in context['active_ids']:
-                attach_pool = self.pool.get('ir.attachment')
-                user_obj = self.pool.get('res.users').browse(cr, uid, uid)
-                export_to = self.read(cr, uid, ids and ids[0], ['export_to'])
-                if export_to['export_to'] == 's3':
-                    attach_obj = attach_pool.browse(cr, uid, att_id)
-                    connection_check = s3_interface.connection_test(cr,
-                                    attach_pool, att_id, 'db_datas', user=uid,
-                                    context=context)
-                    try:
-                        if connection_check:
-                            s3_interface.s3_set_file(cr, attach_pool, att_id,
-                                 'db_datas', attach_obj.db_datas, user=uid,
-                                  context=context)
-                        logging.info("Exported Succesfully")
-                    except Exception as details:
-                        logging.error(details)
+        ''' Export to attachment to AWS S3
+        '''
+        if not ids:
+            return False
+        for att_id in context['active_ids']:
+            attach_pool = self.pool.get('ir.attachment')
+            user_obj = self.pool.get('res.users').browse(cr, uid, uid)
+            export_to = self.read(cr, uid, ids and ids[0], ['export_to'])
+            if export_to['export_to'] == 's3':
+                attach_obj = attach_pool.browse(cr, uid, att_id)
+                connection_check = s3_interface.connection_test(cr,
+                                attach_pool, att_id, 'db_datas', user=uid,
+                                context=context)
+                try:
+                    if connection_check:
+                        s3_interface.s3_set_file(cr, attach_pool, att_id,
+                             'db_datas', attach_obj.db_datas, user=uid,
+                              context=context)
+                    logging.info("Exported Succesfully")
+                except Exception as details:
+                    logging.error(details)
         return True
 wiz_export()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

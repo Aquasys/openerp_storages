@@ -46,6 +46,11 @@ class broken_orphan_files(report_sxw.rml_parse):
         })
 
     def get_bucket(self, company_id):
+        '''
+        Get list of bucket from AWS S3
+        @param company_id: company id
+        @return: List of files on bucket
+        '''
         company_pool = self.pool.get('res.company')
         company_obj = company_pool.browse(self.cr, self.uid, company_id)
         s3 = boto.connect_s3(company_obj.aws_access_key_id,
@@ -54,6 +59,10 @@ class broken_orphan_files(report_sxw.rml_parse):
         return bucket.list()
 
     def get_broken_orphan(self):
+        '''
+        Search all list of broken and orphan files for openerp-s3 interface
+        @return: List of dict of broken and orphan files
+        '''
         result = []
         self_pool = self.pool.get('lookup')
         company_id = self.pool.get('res.users').read(self.cr,
