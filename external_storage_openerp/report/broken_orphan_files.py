@@ -79,7 +79,7 @@ class broken_orphan_files(report_sxw.rml_parse):
                                'model': '',
                                'field_name': ''
                                })
-        return result
+        return [{'line':result}]
 
 report_sxw.report_sxw('report.broken.orphan.files', 'lookup',
   'openobject-addons/external_storage_openerp/report/broken_orphan_files.rml',

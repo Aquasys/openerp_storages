@@ -8,6 +8,7 @@
                 <form string="Broken/Orphan File Report">
                    <label string="print broken pipe files to aws s3 and orphan files on s3" />
                    <button name="action_print" type="object" string="Print"/>
+                   <button special="cancel" type="object" string="Cancel"/>
                 </form>
             </field>
         </record>
