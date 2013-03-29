@@ -2,6 +2,10 @@
 External Storage
 ================
 
+.. contents::
+    :depth: 1
+    :local:
+
 Introduction
 ============
 
