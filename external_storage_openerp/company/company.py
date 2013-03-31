@@ -38,7 +38,9 @@ from ftplib import FTP
 
 
 class res_company(osv.osv):
-    ''' AWS(A3) and FTP credentials store in admin level configuration '''
+    '''
+    AWS(A3) and FTP credentials store in admin level configuration
+    '''
     _inherit = 'res.company'
     _columns = {'aws_access_key_id': fields.char('AWS Access Key ID',
                                                  size=128),
@@ -51,7 +53,9 @@ class res_company(osv.osv):
                 }
 
     def test_s3_connection(self, cr, uid, ids, context={}):
-        ''' method to test credentials and connection '''
+        '''
+        method to test credentials and connection
+        '''
         if not ids:
             return False
         try:
@@ -70,7 +74,9 @@ class res_company(osv.osv):
         return True
 
     def test_ftp_connection(self, cr, uid, ids, context={}):
-        '''test connection to ftp server'''
+        '''
+        Test connection to ftp server
+        '''
         if not ids:
             return False
         try:

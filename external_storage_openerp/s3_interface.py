@@ -46,9 +46,12 @@ import base64
 
 
 def sha_file_naming(filename):
-    ''' Encrypted file name using sha algoritham
+    '''
+    Encrypted file name using sha algoritham
     to achive uniqueness of files on AWS S3
+
     @param filename: File data (contant)
+
     @return: Encrypted file name
     '''
     sha_object = hashlib.sha256(filename)
@@ -57,15 +60,18 @@ def sha_file_naming(filename):
 
 def s3_set_file(cr, obj, id, name,
                 value, user=SUPERUSER_ID, context={}):
-    '''Upload file to AWS S3 using boto
+    '''
+    Upload file to AWS S3 using boto
     Track log in lookup table for mapping of external
     file name to openerp record
+
     @param cr: DB Cusrsor
     @param obj: current object pool
     @param id: id of current record
     @param name: name of binary field
     @param value: binary data to store
     @param user: current user id
+
     @return: Encrypt file name, which file store on s3
     '''
     encrypt_filename = ''
@@ -110,12 +116,15 @@ def s3_set_file(cr, obj, id, name,
 
 
 def s3_get_file(cr, obj, i, name, user=SUPERUSER_ID, context={}, values=[]):
-    ''' Download file from AWS S3
+    '''
+    Download file from AWS S3
+
     @param cr: DB Cusrsor
     @param obj: current object pool
     @param i: id of current record
     @param name: name of binary field
     @param user: current user id
+
     @return: binary data
     '''
     data = ''
@@ -151,12 +160,14 @@ def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
     '''
     To check connection and verify for external storage module is 
     installed or not
+
     @param cr: DB Cusrsor
     @param obj: current object pool
     @param id: id of current record
     @param name: name of binary field
     @param user: current user id
-    @return: True or False
+
+    @return: Boolean
     '''
     try:
         cr.execute("SELECT id from ir_module_module where\
@@ -185,3 +196,5 @@ def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
     if not bucket:
         return False
     return True
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

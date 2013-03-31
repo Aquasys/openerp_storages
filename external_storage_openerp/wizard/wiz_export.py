@@ -37,7 +37,8 @@ import logging
 
 
 class wiz_export(osv.osv_memory):
-    ''' Export of attachments existing in openerp
+    '''
+    Export of attachments existing in openerp
     Useful for initial export of existing database and
     binary fields which are not storing on S3 and requirment to upload some
     docs to export
@@ -53,7 +54,8 @@ class wiz_export(osv.osv_memory):
                  }
 
     def action_external_export(self, cr, uid, ids, context={}):
-        ''' Export to attachment to AWS S3
+        '''
+        Export to attachment to AWS S3
         '''
         if not ids:
             return False
@@ -76,4 +78,5 @@ class wiz_export(osv.osv_memory):
                     logging.error(details)
         return True
 wiz_export()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
