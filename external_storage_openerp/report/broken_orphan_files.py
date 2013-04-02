@@ -68,21 +68,21 @@ class broken_orphan_files(report_sxw.rml_parse):
         '''
         result = []
         self_pool = self.pool.get('lookup')
-        company_id = self.pool.get('res.users').read(self.cr,
-                                         self.uid, self.uid, ['id'])
+        company_id = self.pool.get('res.users').read(
+            self.cr, self.uid, self.uid, ['id'])
         s3_files = [x.name.encode('utf-8') for x in
                     self.get_bucket(company_id['id'])]
         lookup_ids = self_pool.search(self.cr, self.uid, [])
-        lookup_files = [x.en_file_name for x in self_pool.browse(self.cr,
-                                                         self.uid, lookup_ids)]
+        lookup_files = [x.en_file_name for x in self_pool.browse(
+            self.cr, self.uid, lookup_ids)]
         for obj in self_pool.browse(self.cr, self.uid, lookup_ids):
             if obj.en_file_name not in s3_files:
                 result.append({'type': 'Broken Pipe',
-                            'file_name': obj.file_name,
-                            'company': obj.company_id and obj.company_id.name,
-                            'model': obj.model_id,
-                            'field_name': obj.field_name
-                             })
+                               'file_name': obj.file_name,
+                               'company': (obj.company_id and
+                                           obj.company_id.name),
+                               'model': obj.model_id,
+                               'field_name': obj.field_name})
         for s3_file in s3_files:
             if s3_file not in lookup_files:
                 result.append({'type': 'Orphan',
@@ -93,7 +93,9 @@ class broken_orphan_files(report_sxw.rml_parse):
                                })
         return [{'line': result}]
 
-report_sxw.report_sxw('report.broken.orphan.files', 'lookup',
-    'openobject-addons/external_storage_openerp/report/broken_orphan_files.rml',
+report_sxw.report_sxw(
+    'report.broken.orphan.files', 'lookup',
+    'openobject-addons/external_storage_openerp/report/'
+    'broken_orphan_files.rml',
     parser=broken_orphan_files)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
