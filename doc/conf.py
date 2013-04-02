@@ -284,7 +284,7 @@ epub_copyright = u'2013, Aquasys G.K.'
 # Allow duplicate toc entries.
 #epub_tocdup = True
 
-# rst_prolog = """
+rst_prolog = """
     .. |s3| replace:: Amazon S3
 """
 

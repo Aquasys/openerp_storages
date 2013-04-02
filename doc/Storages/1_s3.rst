@@ -33,7 +33,9 @@ S3 Technical Details
 --------------------
 There are several technical details in relation to the external storage:
 
-* For overwriting binary fields, a  and developer will have to define his statements as follows::
+* For overwriting binary fields, a  and developer will have to define his statements as follows:
+
+.. code-block:: python
 
    fields.binary("File",store="s3 or ftp") //data store in s3 or ftp
    fields.binary("File") //data store in database
@@ -48,13 +50,40 @@ There are several technical details in relation to the external storage:
 
 
 Bucket/Directory Configuration
-------------------------------
+==============================
 
 *You will need to create new object in OpenERP for s3 bucket/directory configuration*
 
 **Need:** We can store documents in separate bucket/directory as per modules(sale document in one bucket/directory, purchase doc in another bucket/directory)
-Implementation: Synchronize or create bucket/directory list and add one2many for modules. While writing file it will check this configuration and put file to respective bucket/directory
+**Implementation:** Synchronize or create bucket/directory list and add one2many for modules. While writing file it will check this configuration and put file to respective bucket/directory
 
+
+Function to write binary (S3/FTP)
+=================================
+
+1. Write
+
+.. code-block:: python
+
+   write_externalbinary(cr, uid, ids,url, AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,user_name,password,data, context)
+   Return True/False
+
+2. Read
+
+.. code-block:: python
+
+   read_externalbianry(cr, uid, ids, url, AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,user_name,password,data, context)
+   Return True/False
+
+3. Create :Create new file with SHA
+
+.. code-block:: python
+
+   create_externalbinary(cr, uid, url, AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,user_name,password,data, context)
+   Return file_name/False //file name will stored in same record.
+
+4. unlink_externalbinary (cr, uid, ids, url, AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,user_name,password, context)
+   Return True/False
 
 .. seealso::
 
