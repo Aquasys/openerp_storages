@@ -18,17 +18,17 @@ S3 Features
 
 #. *Signup for Amazon s3:*
 
-   The only way you are ever going to use the Amazon s3 is by first creating
+   The only way you are ever going to use the |s3| is by first creating
    an |aws| account. You will then be notified via mail that your account is
    ready for use.
 
 #. *Amazon S3 Buckets*
 
-   All objects in S3 external storage are stored in a bucket and for this
-   reason, you will have to create a bucket in  s3 before you can store your
+   All objects in |s3| external storage are stored in a bucket and for this
+   reason, you will have to create a bucket in  |s3| before you can store your
    object. To do this:
 
-   * You log into your s3 management system.
+   * You log into your |s3| management system.
    * Click on create bucket.
    * Give the name of your bucket
 
@@ -61,8 +61,8 @@ There are several technical details in relation to the external storage:
 Bucket/Directory Configuration
 ==============================
 
-*You will need to create new object in OpenERP for s3 bucket/directory
-configuration*
+You will need to create new object in |erp| for the |s3| bucket/directory
+configuration.
 
 **Need:** We can store documents in separate bucket/directory as per modules
 (sale document in one bucket/directory, purchase doc in another
