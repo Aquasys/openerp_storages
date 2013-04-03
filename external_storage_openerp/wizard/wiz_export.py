@@ -40,7 +40,7 @@ class wiz_export(osv.osv_memory):
     '''
     Export of attachments existing in openerp
     Useful for initial export of existing database and
-    binary fields which are not storing on S3 and requirment to upload some
+    binary fields which are not storing on S3 and requirement to upload some
     docs to export
     '''
     _name = 'wiz.export'
