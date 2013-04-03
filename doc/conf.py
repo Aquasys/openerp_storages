@@ -285,7 +285,8 @@ epub_copyright = u'2013, Aquasys G.K.'
 #epub_tocdup = True
 
 rst_prolog = """
-    .. |s3| replace:: Amazon S3
+.. |s3| replace:: Amazon S3
+.. |aws| replace:: Amazon Web Services
 """
 
 # Example configuration for intersphinx: refer to the Python standard library.

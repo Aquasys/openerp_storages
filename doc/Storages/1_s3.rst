@@ -9,7 +9,8 @@ External Storage
 Introduction
 ============
 
-*Amazon S3 is storage for the Internet. It is designed to make web-scale computing easier for developers.*
+*Amazon S3 is storage for the Internet. It is designed to make web-scale
+computing easier for developers.*
 
 S3 Features
 -----------
@@ -17,30 +18,38 @@ S3 Features
 
 #. *Signup for Amazon s3:*
 
-   The only way you are ever going to use the Amazon s3 is by first creating an AWS account. You will then be notified via mail that your account is ready for use.
+   The only way you are ever going to use the Amazon s3 is by first creating
+   an |aws| account. You will then be notified via mail that your account is
+   ready for use.
 
 #. *Amazon S3 Buckets*
 
-   All objects in S3 external storage are stored in a bucket and for this reason, you will have to create a bucket in  s3 before you can store your object. To do this:
+   All objects in S3 external storage are stored in a bucket and for this
+   reason, you will have to create a bucket in  s3 before you can store your
+   object. To do this:
 
    * You log into your s3 management system.
    * Click on create bucket.
    * Give the name of your bucket
 
-Once the bucket is created, you can **add an object** into the bucket, **view the object**, **move** or **delete** an object.
+Once the bucket is created, you can **add an object** into the bucket, **view
+the object**, **move** or **delete** an object.
 
 S3 Technical Details
 --------------------
 There are several technical details in relation to the external storage:
 
-* For overwriting binary fields, a  and developer will have to define his statements as follows:
+* For overwriting binary fields, a  and developer will have to define his
+  statements as follows:
 
 .. code-block:: python
 
    fields.binary("File",store="s3 or ftp") //data store in s3 or ftp
    fields.binary("File") //data store in database
 
-* For performing configurations, the fields will have to be added in a new tabs known as the "External Storage Configuration" the Sub Page "FTP" and "S3" as follows:
+* For performing configurations, the fields will have to be added in a new
+  tabs known as the "External Storage Configuration" the Sub Page "FTP" and
+  "S3" as follows:
 
    #. url (s3)/path(ftp)
    #. email (s3)/ username(ftp)
@@ -52,10 +61,15 @@ There are several technical details in relation to the external storage:
 Bucket/Directory Configuration
 ==============================
 
-*You will need to create new object in OpenERP for s3 bucket/directory configuration*
+*You will need to create new object in OpenERP for s3 bucket/directory
+configuration*
 
-**Need:** We can store documents in separate bucket/directory as per modules(sale document in one bucket/directory, purchase doc in another bucket/directory)
-**Implementation:** Synchronize or create bucket/directory list and add one2many for modules. While writing file it will check this configuration and put file to respective bucket/directory
+**Need:** We can store documents in separate bucket/directory as per modules
+(sale document in one bucket/directory, purchase doc in another
+bucket/directory)
+**Implementation:** Synchronize or create bucket/directory list and add
+one2many for modules. While writing file it will check this configuration and
+put file to respective bucket/directory
 
 
 Function to write binary (S3/FTP)
@@ -87,5 +101,6 @@ Function to write binary (S3/FTP)
 
 .. seealso::
 
-    * `Amazon S3 Documentation <http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingIAMPolicies.html/>`_
+    * `Amazon S3 Documentation
+      <http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingIAMPolicies.html/>`_
 
