@@ -295,3 +295,5 @@ intersphinx_mapping = {
     #'doc_openerp': ('http://doc.erp.aquasys.co.jp', None),
     #'doc_aquasys': ('http://doc.aquasys.co.jp', None),
 }
+
+highlight_language = 'python'
