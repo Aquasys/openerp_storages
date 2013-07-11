@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <act_window id="action_export_attachments"
+            key2="client_print_multi"
+            name="Export External Storage"
+            res_model="wiz.export"
+            src_model="ir.attachment"
+            view_mode="form" target="new" view_type="form" />
+    </data>
+</openerp>
