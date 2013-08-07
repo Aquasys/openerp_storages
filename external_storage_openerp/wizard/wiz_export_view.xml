@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    <record id="export_view_form" model="ir.ui.view">
+            <field name="name">export.form</field>
+            <field name="model">wiz.export</field>
+            <field name="arch" type="xml">
+                <form string="Export">
+                   <field name="export_to" />
+                   <newline/>
+                   <button name="action_external_export" type="object" string="Export"/>
+                   <button special="cancel" type="object" string="Cancel"/>
+                </form>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    <report auto="False"
+    id="report_broken_orphan_files"
+    model="lookup"
+    name="broken.orphan.files"
+    rml="external_storage_openerp/report/broken_orphan_files.rml"
+    string="Broken/Orphan Files"/>
+    </data>
+</openerp>
