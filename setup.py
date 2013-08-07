@@ -4,7 +4,7 @@ from glob import glob
 
 MODULE_NAME = 'openerp_storages'
 
-REQUIRES = ['git+ssh://aquasys/lettuce_terrain@v0.1.4#egg=lettuce_terrain']
+REQUIRES = ['-e git+ssh://aquasys/lettuce_terrain@v0.1.4#egg=lettuce_terrain']
 
 META_DATA = dict(
     name='openerp_storages',
