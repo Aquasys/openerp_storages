@@ -21,7 +21,7 @@ META_DATA = dict(
         'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     #install_requires=REQUIRES,
-    packages=['openerpstorage'],
+    packages=['external_storage_openerp'],
     include_package_data=True,
     zip_safe=False,
     scripts = []
