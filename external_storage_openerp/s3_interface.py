@@ -158,7 +158,7 @@ def s3_get_file(cr, obj, i, name, user=SUPERUSER_ID, context={}, values=[]):
 
 def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
     '''
-    To check connection and verify for external storage module is 
+    To check connection and verify for external storage module is
     installed or not
 
     @param cr: DB Cusrsor
@@ -188,6 +188,7 @@ def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
         logging.error(detail)
     if not s3_connection_info:
         return False
+    bucket = False
     try:
         s3 = boto.connect_s3(s3_connection_info[0], s3_connection_info[1])
         bucket = s3.get_bucket(s3_connection_info[2])
