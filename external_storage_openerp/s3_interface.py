@@ -77,7 +77,6 @@ def s3_set_file(cr, obj, id, name,
     encrypt_filename = ''
     cr.execute('select company_id from res_users where id = %s' %
                (user))
-    print ":::::set_file_name:::"
     company_id = cr.fetchall()
     company_id = tools.misc.flatten(company_id)
     cr.execute('select aws_access_key_id,aws_secret_access_key,bucket from \
@@ -93,15 +92,15 @@ def s3_set_file(cr, obj, id, name,
             and res_id=%s and company_id=%s and field_name='%s'"%(obj._table,
                                                       id, company_id[0], name))
     file_exist = tools.misc.flatten(cr.fetchall())
-    print "::::file exist:::",file_exist
     if file_exist:
         k.key = file_exist[0]
         bucket.delete_key(k)
         cr.execute("delete from lookup where en_file_name='%s'"
                    % (file_exist[0]))
-    print "::::value::::::::",value
-    #create file name from it content for unique file name
-    encrypt_filename = sha_file_naming(value)
+    #create file name from it content for unique file name; 
+    #File name is combination of object_name+res_id+value; 
+    f_name = str(obj._table)+str(id)+value 
+    encrypt_filename = sha_file_naming(f_name)
     k.key = encrypt_filename
     k.set_contents_from_string(base64.decodestring(value), encrypt_key=True)
     logging.info("File stored to AWS S3")
