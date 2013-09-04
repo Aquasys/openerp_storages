@@ -86,20 +86,20 @@ def s3_set_file(cr, obj, id, name,
     s3 = boto.connect_s3(s3_connection_info[0], s3_connection_info[1])
     bucket = s3.get_bucket(s3_connection_info[2])
     logging.info("Connection successful to AWS S3")
-    k = Key(bucket)    
+    k = Key(bucket)
     #Check for existing file in lookup and delete it on AWS S3
     cr.execute("select en_file_name from lookup where model_id='%s' \
             and res_id=%s and company_id=%s and field_name='%s'"%(obj._table,
                                                       id, company_id[0], name))
-    file_exist = tools.misc.flatten(cr.fetchall())    
+    file_exist = tools.misc.flatten(cr.fetchall())
     if file_exist:
         k.key = file_exist[0]
         bucket.delete_key(k)
         cr.execute("delete from lookup where en_file_name='%s'"
                    % (file_exist[0]))
-    #create file name from it content for unique file name; 
-    #File name is combination of object_name+res_id+value;     
-    f_name = str(obj._table)+str(id)+value 
+    #create file name from it content for unique file name;
+    #File name is combination of object_name+res_id+value;
+    f_name = '-'.join([str(obj._table), str(id), value])
     encrypt_filename = sha_file_naming(f_name)
     k.key = encrypt_filename
     k.set_contents_from_string(base64.decodestring(value), encrypt_key=True)
