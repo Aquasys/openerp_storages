@@ -38,12 +38,12 @@ class ir_attachment(osv.osv):
     _columns = {'db_datas': fields.binary('Database Data', store='s3'),
                 }
 
-    #Unlink Method to delete related records of attachements from 
-    #AWS S3 Lookup table of 
-    def unlink(self, cr, uid, ids, context=None):        
+    #Unlink Method to delete related records of attachements from
+    #AWS S3 Lookup table of openerp
+    def unlink(self, cr, uid, ids, context=None):
         lookup_obj = self.pool.get('lookup')
-        lookup_ids = lookup_obj.search(cr, uid, [('res_id','=',ids)])        
-        lookup_obj.unlink(cr, uid, lookup_ids, context={'store':'s3'})
+        lookup_ids = lookup_obj.search(cr, uid, [('res_id', '=', ids)])
+        lookup_obj.unlink(cr, uid, lookup_ids, context={'store': 's3'})
         return osv.osv.unlink(self, cr, uid, ids, context=context)
 ir_attachment()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

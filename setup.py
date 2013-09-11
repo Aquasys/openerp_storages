@@ -1,5 +1,5 @@
-from setuptools import setup, find_packages
-from glob import glob
+from setuptools import setup  # , find_packages
+# from glob import glob
 
 
 MODULE_NAME = 'openerp_storages'
@@ -24,7 +24,7 @@ META_DATA = dict(
     packages=['openerpstorage'],
     include_package_data=True,
     zip_safe=False,
-    scripts = []
+    scripts=[]
 )
 
 if __name__ == '__main__':

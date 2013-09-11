@@ -34,8 +34,9 @@ from openerp.osv import osv, fields
 import logging
 import boto
 from boto.s3.key import Key
-import hashlib
-import base64
+#import hashlib
+#import base64
+
 
 class lookup(osv.osv):
     _name = 'lookup'
@@ -62,22 +63,22 @@ class lookup(osv.osv):
         """
         #Connecting to AWS S3 Object
         user_obj = self.pool.get('res.users')
-        company_id = user_obj.read(cr, uid, uid, ['company_id'],\
-                               context=context)['company_id']
-        s3_connection_info = self.pool.get('res.company').read(cr, uid, \
-                            [company_id[0]], ['aws_access_key_id',\
-                            'aws_secret_access_key','bucket'])[0]
+        company_id = user_obj.read(cr, uid, uid, ['company_id'],
+                                   context=context)['company_id']
+        s3_connection_info = self.pool.get('res.company').read
+        (cr, uid, [company_id[0]], ['aws_access_key_id',
+                                    'aws_secret_access_key', 'bucket'])[0]
         try:
-            s3 = boto.connect_s3(s3_connection_info['aws_access_key_id'],\
-                         s3_connection_info['aws_secret_access_key'])
+            s3 = boto.connect_s3(s3_connection_info['aws_access_key_id'],
+                                 s3_connection_info['aws_secret_access_key'])
             bucket = s3.get_bucket(s3_connection_info['bucket'])
             logging.info("Connection successful to AWS S3")
             k = Key(bucket)
         except Exception as detail:
             logging.error(detail)
         for r in self.read(cr, uid, ids, ['en_file_name']):
-             #Check if OpenERP S3 Lookup filename exist in bucket
-             if bucket.get_key(r['en_file_name']):
+            #Check if OpenERP S3 Lookup filename exist in bucket
+            if bucket.get_key(r['en_file_name']):
                 k.key = r['en_file_name']
                 bucket.delete_key(k)
         return super(lookup, self).unlink(self, cr, uid, ids, context=context)

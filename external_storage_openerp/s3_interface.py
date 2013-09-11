@@ -89,8 +89,8 @@ def s3_set_file(cr, obj, id, name,
     k = Key(bucket)
     #Check for existing file in lookup and delete it on AWS S3
     cr.execute("select en_file_name from lookup where model_id='%s' \
-            and res_id=%s and company_id=%s and field_name='%s'"%(obj._table,
-                                                      id, company_id[0], name))
+            and res_id=%s and company_id=%s and field_name='%s'"
+               % (obj._table, id, company_id[0], name))
     file_exist = tools.misc.flatten(cr.fetchall())
     if file_exist:
         k.key = file_exist[0]
@@ -109,8 +109,8 @@ def s3_set_file(cr, obj, id, name,
 
     try:
         query = "insert into lookup (file_name,en_file_name,model_id,res_id,\
-        company_id,field_name) values('%s','%s','%s','%s',%s,'%s')"%('',
-                         encrypt_filename, obj._table, id, company_id[0], name)
+        company_id,field_name) values('%s','%s','%s','%s',%s,'%s')" \
+        % ('', encrypt_filename, obj._table, id, company_id[0], name)
         cr.execute(query)
     except Exception as detail:
         logging.error(detail)
@@ -135,12 +135,12 @@ def s3_get_file(cr, obj, i, name, user=SUPERUSER_ID, context={}, values=[]):
     company_id = cr.fetchall()
     company_id = tools.misc.flatten(company_id)
     try:
-        cr.execute('select aws_access_key_id,aws_secret_access_key,bucket from \
-        res_company where id = %s' % (company_id[0]))
+        cr.execute('select aws_access_key_id,aws_secret_access_key,bucket \
+                   from res_company where id = %s' % (company_id[0]))
         s3_connection_info = tools.misc.flatten(cr.fetchall())
         cr.execute("select en_file_name from lookup where res_id=%s and \
-        model_id='%s' and company_id=%s and field_name='%s'"%(i,obj._table,
-                                                      company_id[0], name))
+        model_id='%s' and company_id=%s and field_name='%s'"
+                   % (i, obj._table, company_id[0], name))
         encrypt_filename = tools.misc.flatten(cr.fetchall())
     except Exception as detail:
         logging.error(detail)
@@ -159,6 +159,7 @@ def s3_get_file(cr, obj, i, name, user=SUPERUSER_ID, context={}, values=[]):
         logging.error(detail)
 
     return data
+
 
 def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
     '''
@@ -182,7 +183,7 @@ def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
     if not s3_installed:
         return False
     try:
-        cr.execute('select company_id from res_users where id = %s' %(user))
+        cr.execute('select company_id from res_users where id = %s' % (user))
         company_id = cr.fetchall()
         company_id = tools.misc.flatten(company_id)
         cr.execute('select aws_access_key_id,aws_secret_access_key,bucket from\

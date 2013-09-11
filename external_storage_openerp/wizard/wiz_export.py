@@ -46,12 +46,12 @@ class wiz_export(osv.osv_memory):
     _name = 'wiz.export'
     _rec_name = 'export_to'
     _columns = {
-               'export_to': fields.selection([('s3', 'S3'),('ftp', 'FTP')],
-                                             'Export To')
-               }
+        'export_to': fields.selection([('s3', 'S3'), ('ftp', 'FTP')],
+                                      'Export To')
+    }
     _defaults = {
-                 'export_to': lambda *a: 's3'
-                 }
+        'export_to': lambda *a: 's3'
+    }
 
     def action_external_export(self, cr, uid, ids, context={}):
         '''
@@ -61,18 +61,19 @@ class wiz_export(osv.osv_memory):
             return False
         for att_id in context['active_ids']:
             attach_pool = self.pool.get('ir.attachment')
-            user_obj = self.pool.get('res.users').browse(cr, uid, uid)
+            #user_obj = self.pool.get('res.users').browse(cr, uid, uid)
             export_to = self.read(cr, uid, ids and ids[0], ['export_to'])
             if export_to['export_to'] == 's3':
                 attach_obj = attach_pool.browse(cr, uid, att_id)
-                connection_check = s3_interface.connection_test(cr,
-                                attach_pool, att_id, 'db_datas', user=uid,
-                                context=context)
+                connection_check = s3_interface.connection_test(
+                    cr, attach_pool, att_id, 'db_datas', user=uid,
+                    context=context)
                 try:
                     if connection_check:
                         s3_interface.s3_set_file(cr, attach_pool, att_id,
-                             'db_datas', attach_obj.db_datas, user=uid,
-                              context=context)
+                                                 'db_datas',
+                                                 attach_obj.db_datas,
+                                                 user=uid, context=context)
                     logging.info("Exported Succesfully")
                 except Exception as details:
                     logging.error(details)
