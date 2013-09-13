@@ -176,7 +176,7 @@ def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
     '''
     try:
         cr.execute("SELECT id from ir_module_module where\
-         name = 'external_storage_openerp' and state = 'installed';")
+         name = 'openerp_storages' and state = 'installed';")
         s3_installed = cr.fetchall()
     except Exception as detail:
         logging.error(detail)
