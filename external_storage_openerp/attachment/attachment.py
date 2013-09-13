@@ -42,8 +42,8 @@ class ir_attachment(osv.osv):
     #AWS S3 Lookup table of openerp
     def unlink(self, cr, uid, ids, context=None):
         lookup_obj = self.pool.get('lookup')
-        lookup_ids = lookup_obj.search(cr, uid, [('res_id', '=', ids)])
-        lookup_obj.unlink(cr, uid, lookup_ids, context={'store': 's3'})
-        return osv.osv.unlink(self, cr, uid, ids, context=context)
+        lookup_ids = lookup_obj.search(cr, uid, [('res_id', 'in', ids)])
+        lookup_obj.unlink(cr, uid, lookup_ids, context=context)
+        return super(ir_attachment, self).unlink(cr, uid, ids, context=context)
 ir_attachment()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
