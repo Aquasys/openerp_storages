@@ -5,7 +5,7 @@
     id="report_broken_orphan_files"
     model="lookup"
     name="broken.orphan.files"
-    rml="external_storage_openerp/report/broken_orphan_files.rml"
+    rml="openerp_storages/report/broken_orphan_files.rml"
     string="Broken/Orphan Files"/>
     </data>
 </openerp>
