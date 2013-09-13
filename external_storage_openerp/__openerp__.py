@@ -32,7 +32,7 @@
 #########################################################################
 {
     'name': 'External Storage',
-    'version': '1.0',
+    'version': '0.3',
     'category': 'Interface',
     'summary': 'AWS S3 and FTP storage for attachment files',
     'description': """
@@ -46,15 +46,15 @@ It design for store attachments in external storage
     """,
     'author': 'Aquasys G.K.',
     'website': 'http://www.aquasys.co.jp/',
-    'depends': ['base','product'],
+    'depends': ['base', 'product'],
     'data': [
-             'attachment/attachment_view.xml',
-             'company/company_view.xml',
-             'lookup/lookup_view.xml',
-             'security/ir.model.access.csv',
-             'report/external_storage_reports.xml',
-             'wizard/wiz_s3_report_view.xml',
-             'wizard/wiz_export_view.xml',
+        'attachment/attachment_view.xml',
+        'company/company_view.xml',
+        'lookup/lookup_view.xml',
+        'security/ir.model.access.csv',
+        'report/external_storage_reports.xml',
+        'wizard/wiz_s3_report_view.xml',
+        'wizard/wiz_export_view.xml',
     ],
     'demo': [
     ],

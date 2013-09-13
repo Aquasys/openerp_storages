@@ -20,7 +20,7 @@ Contents:
     :maxdepth: 2
 
     Installation/0_title
-    Usage/0_title
+    Storages/0_title
 
 
 Indices and tables
