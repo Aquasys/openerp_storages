@@ -32,7 +32,7 @@
 #########################################################################
 
 from openerp.osv import osv, fields
-from openerp.addons.external_storage_openerp import s3_interface
+from openerp.addons.openerp_storages import s3_interface
 import logging
 
 

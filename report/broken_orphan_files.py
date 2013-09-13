@@ -95,7 +95,7 @@ class broken_orphan_files(report_sxw.rml_parse):
 
 report_sxw.report_sxw(
     'report.broken.orphan.files', 'lookup',
-    'openobject-addons/external_storage_openerp/report/'
+    'openobject-addons/openerp_storages/report/'
     'broken_orphan_files.rml',
     parser=broken_orphan_files)
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
