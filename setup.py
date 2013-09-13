@@ -8,7 +8,7 @@ MODULE_NAME = 'openerp_storages'
 
 META_DATA = dict(
     name='openerp_storages',
-    version='0.0,.0',
+    version='0.3',
     description='Storages module for OpenERP',
     author='Aquasys G.K.',
 
