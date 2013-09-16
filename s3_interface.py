@@ -79,21 +79,23 @@ def s3_set_file(cr, obj, id, name,
                (user))
     company_id = cr.fetchall()
     company_id = tools.misc.flatten(company_id)
-    cr.execute('select aws_access_key_id,aws_secret_access_key,bucket from \
-            res_company where id = %s' % (company_id[0]))
+    cr.execute("select aws_access_key_id,aws_secret_access_key,bucket, \
+               bucket_subdir from res_company where id = %s" % (company_id[0]))
     s3_connection_info = tools.misc.flatten(cr.fetchall())
 #    try:
     s3 = boto.connect_s3(s3_connection_info[0], s3_connection_info[1])
     bucket = s3.get_bucket(s3_connection_info[2])
     logging.info("Connection successful to AWS S3")
     k = Key(bucket)
+
     #Check for existing file in lookup and delete it on AWS S3
     cr.execute("select en_file_name from lookup where model_id='%s' \
             and res_id=%s and company_id=%s and field_name='%s'"
                % (obj._table, id, company_id[0], name))
     file_exist = tools.misc.flatten(cr.fetchall())
     if file_exist:
-        k.key = file_exist[0]
+        file_name = ''.join([s3_connection_info[3] or '', file_exist[0]])
+        k.key = file_name
         bucket.delete_key(k)
         cr.execute("delete from lookup where en_file_name='%s'"
                    % (file_exist[0]))
@@ -101,7 +103,9 @@ def s3_set_file(cr, obj, id, name,
     #File name is combination of object_name+res_id+value;
     f_name = '-'.join([str(obj._table), str(id), value])
     encrypt_filename = sha_file_naming(f_name)
-    k.key = encrypt_filename
+    #joining filename with subdirectory of bucket
+    file_name = ''.join([s3_connection_info[3] or '', encrypt_filename])
+    k.key = file_name
     k.set_contents_from_string(base64.decodestring(value), encrypt_key=True)
     logging.info("File stored to AWS S3")
 #    except Exception as detail:
@@ -135,8 +139,9 @@ def s3_get_file(cr, obj, i, name, user=SUPERUSER_ID, context={}, values=[]):
     company_id = cr.fetchall()
     company_id = tools.misc.flatten(company_id)
     try:
-        cr.execute('select aws_access_key_id,aws_secret_access_key,bucket \
-                   from res_company where id = %s' % (company_id[0]))
+        cr.execute('select aws_access_key_id,aws_secret_access_key,bucket, \
+                   bucket_subdir from res_company \
+                   where id = %s' % (company_id[0]))
         s3_connection_info = tools.misc.flatten(cr.fetchall())
         cr.execute("select en_file_name from lookup where res_id=%s and \
         model_id='%s' and company_id=%s and field_name='%s'"
@@ -152,7 +157,9 @@ def s3_get_file(cr, obj, i, name, user=SUPERUSER_ID, context={}, values=[]):
         k = Key(bucket)
         #changes to avoid list index out of error
         if encrypt_filename:
-            k.key = encrypt_filename[0]
+            file_name = ''.join([s3_connection_info[3] or '',
+                                 encrypt_filename[0]])
+            k.key = file_name
             data = k.get_contents_as_string()
             logging.info("File read from AWS S3")
     except Exception as detail:
@@ -186,8 +193,9 @@ def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
         cr.execute('select company_id from res_users where id = %s' % (user))
         company_id = cr.fetchall()
         company_id = tools.misc.flatten(company_id)
-        cr.execute('select aws_access_key_id,aws_secret_access_key,bucket from\
-                res_company where id = %s' % (company_id[0]))
+        cr.execute('select aws_access_key_id,aws_secret_access_key,bucket, \
+                   bucket_subdir from res_company \
+                   where id = %s' % (company_id[0]))
         s3_connection_info = tools.misc.flatten(cr.fetchall())
     except Exception as detail:
         logging.error(detail)
@@ -201,6 +209,16 @@ def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
         logging.error(detail)
     if not bucket:
         return False
+    #Checking subdirectory name
+    if s3_connection_info[3]:
+            if not bucket.get_key(s3_connection_info[3]):
+                logging.error("Please check the subdirectory name in AWS S3"
+                              "Bucket and make sure you have inserted"
+                              "trailing '/' behind name like %s/"
+                              % s3_connection_info[3])
+                raise ValueError("%s is not a valid subdirectory value"
+                                 % s3_connection_info[3])
+                return False
     return True
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
