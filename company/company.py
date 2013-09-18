@@ -50,13 +50,11 @@ class res_company(osv.osv):
                 'ftp_host': fields.char('FTP Host', size=128),
                 'ftp_user': fields.char('FTP User', size=128),
                 'ftp_password': fields.char('FTP Password', size=128),
-                'bucket_subdir': fields.char('Bucket Subdirectory', size=256,
-                                             help=("Key in path of "
-                                                   "subdirectory of AWS S3"
-                                                   "bucket \n Note:subdir"
-                                                   "value should end with '/' "
-                                                   "\n eg.:/subdir1/subdir1.1/"
-                                                   )),
+                'bucket_subdir': fields.char(
+                    'Bucket Subdirectory', size=256,
+                    help=('Key in path of subdirectory of AWS S3 bucket \n'
+                          'Note:subdir value should end with "/" \n '
+                          'eg.:/subdir1/subdir1.1/')),
                 }
 
     def test_s3_connection(self, cr, uid, ids, context={}):
@@ -78,9 +76,9 @@ class res_company(osv.osv):
         subdir = company_obj.bucket_subdir
         if subdir and not bucket.get_key(subdir):
             raise osv.except_osv(_('Connection unsuccessful'),
-                                 _("Please check the subdirectory name in AWS"
-                                   "S3 Bucket, and Make sure you have "
-                                   "trailing '/' behind name like %s/"
+                                 _('Please check the subdirectory name in AWS'
+                                   'S3 Bucket, and Make sure you have '
+                                   'trailing "/" behind name like %s/'
                                    % subdir))
 
         logging.info("Connection successful to AWS S3")

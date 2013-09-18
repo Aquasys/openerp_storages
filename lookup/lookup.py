@@ -77,8 +77,8 @@ class lookup(osv.osv):
             k = Key(bucket)
             for r in self.read(cr, uid, ids, ['en_file_name']):
             #Check if OpenERP S3 Lookup filename exist in bucket
-                file_name = ''.join([s3_connection_info['bucket_subdir'] or '',
-                                     r['en_file_name']])
+                file_name = ''.join([s3_connection_info.get(
+                    'bucket_subdir', ''), r['en_file_name']])
                 if bucket.get_key(file_name):
                     k.key = file_name
                     bucket.delete_key(k)
