@@ -67,7 +67,8 @@ class lookup(osv.osv):
                                    context=context)['company_id']
         s3_connection_info = self.pool.get('res.company').read(
             cr, uid, [company_id[0]],
-            ['aws_access_key_id', 'aws_secret_access_key', 'bucket'])[0]
+            ['aws_access_key_id', 'aws_secret_access_key', 'bucket',
+             'bucket_subdir'])[0]
         try:
             s3 = boto.connect_s3(s3_connection_info['aws_access_key_id'],
                                  s3_connection_info['aws_secret_access_key'])
@@ -76,8 +77,10 @@ class lookup(osv.osv):
             k = Key(bucket)
             for r in self.read(cr, uid, ids, ['en_file_name']):
             #Check if OpenERP S3 Lookup filename exist in bucket
-                if bucket.get_key(r['en_file_name']):
-                    k.key = r['en_file_name']
+                file_name = ''.join([s3_connection_info.get(
+                    'bucket_subdir', ''), r['en_file_name']])
+                if bucket.get_key(file_name):
+                    k.key = file_name
                     bucket.delete_key(k)
         except Exception as detail:
             logging.error(detail)

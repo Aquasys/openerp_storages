@@ -14,6 +14,7 @@
                             <field name="aws_access_key_id" />
                             <field name="aws_secret_access_key" password="True"/>
                             <field name="bucket" />
+                            <field name="bucket_subdir" />
                             <button name="test_s3_connection" string="Test Connection" type="object" />
                             </group>
                         </page>
