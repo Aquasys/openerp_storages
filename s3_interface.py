@@ -89,15 +89,15 @@ def s3_set_file(cr, obj, id, name,
     k = Key(bucket)
 
     #Check for existing file in lookup and delete it on AWS S3
-    cr.execute('select en_file_name from lookup where model_id=\'{0}\''
-               ' and res_id={1} and company_id={2} and field_name=\'{3}\''
+    cr.execute("select en_file_name from lookup where model_id='{}'"
+               " and res_id='{}' and company_id='{}' and field_name='{}'"
                .format(obj._table, id, company_id[0], name))
     file_exist = tools.misc.flatten(cr.fetchall())
     if file_exist:
         file_name = ''.join([s3_connection_info[3] or '', file_exist[0]])
         k.key = file_name
         bucket.delete_key(k)
-        cr.execute('delete from lookup where en_file_name=\'{}\''
+        cr.execute("delete from lookup where en_file_name='{}'"
                    .format(file_exist[0]))
     #create file name from it content for unique file name;
     #File name is combination of object_name+res_id+value;
@@ -143,10 +143,10 @@ def s3_get_file(cr, obj, i, name, user=SUPERUSER_ID, context={}, values=[]):
                    'bucket_subdir from res_company where id = {}'
                    .format(company_id[0]))
         s3_connection_info = tools.misc.flatten(cr.fetchall())
-        cr.execute('select en_file_name from lookup where res_id=\'{}\' and'
-                   ' model_id=\'{}\' and company_id=\'{}\' and '
-                   'field_name=\'{}\''.format(i, obj._table,
-                                              company_id[0], name))
+        cr.execute("select en_file_name from lookup where res_id='{}' and"
+                   " model_id='{}' and company_id='{}' and "
+                   "field_name='{}'".format(i, obj._table,
+                                            company_id[0], name))
         encrypt_filename = tools.misc.flatten(cr.fetchall())
     except Exception as detail:
         logging.error(detail)
@@ -165,7 +165,6 @@ def s3_get_file(cr, obj, i, name, user=SUPERUSER_ID, context={}, values=[]):
             logging.info("File read from AWS S3")
     except Exception as detail:
         logging.error(detail)
-
     return data
 
 
@@ -183,8 +182,8 @@ def connection_test(cr, obj, id, name, user=SUPERUSER_ID, context={}):
     @return: Boolean
     '''
     try:
-        cr.execute('SELECT id from ir_module_module where '
-                   'name=\'openerp_storages\' and state=\'installed\'')
+        cr.execute("SELECT id from ir_module_module where "
+                   "name='openerp_storages' and state='installed'")
         s3_installed = cr.fetchall()
     except Exception as detail:
         logging.error(detail)
