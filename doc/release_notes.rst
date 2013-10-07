@@ -1,6 +1,14 @@
 Release Notes
 =============
 
+
+v0.3.1
+------
+:Date: 2013/10/07
+
+* Add sub-directories feature for s3 storage.
+
+
 v0.3
 ----
 :Date: 2013/09/13
