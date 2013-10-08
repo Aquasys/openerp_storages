@@ -43,5 +43,34 @@
 
         <menuitem action="action_lookup_s3" id="menu_s3_lookup"
             parent="base.next_id_4"/>
+
+        <record id="search_lookup_s3_filter" model="ir.ui.view">
+            <field name="name">lookup.select</field>
+            <field name="model">lookup</field>
+            <field name="arch" type="xml">
+                <search string="S3 Lookup Filters">
+                    <field name="en_file_name" string="Encrypted File Name" filter_domain="[(1,'=',1)]"/>
+                    <separator/>
+                    <filter string="Resource Model" name="res_id" domain="[(1,'=',1)]"/>
+                    <separator/>
+                    <filter string="Companies" name="company_id" domain="[(1,'=',1)]"/>
+                    <separator/>
+                    <filter string="Field Name" name="field_name" domain="[(1,'=',1)]"/>
+                    <separator/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Company" domain="[]" context="{'group_by' : 'company_id'}" />
+                        <filter string="Resource Model" domain="[]" context="{'group_by': 'model_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_lookup_s3_act" model="ir.actions.act_window">
+            <field name="name">S3 Lookup</field>
+            <field name="res_model">lookup</field>
+            <field name="view_type">form</field>
+            <field name="context">{"search_default_type_date":1}</field>
+            <field name="view_id" ref="lookup_view_tree"/>
+        </record>
     </data>
 </openerp>
