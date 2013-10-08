@@ -40,7 +40,7 @@ from boto.s3.key import Key
 
 class lookup(osv.osv):
     _name = 'lookup'
-    _rec_name = 'file_name'
+    _rec_name = 'en_file_name'
     _columns = {'file_name': fields.char('File Name', size=512),
                 'en_file_name': fields.char('Encrypted File Name', size=512),
                 'model_id': fields.char('Resource Model', size=256),
