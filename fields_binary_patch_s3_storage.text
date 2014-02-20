@@ -1,7 +1,7 @@
 === modified file 'openerp/osv/fields.py'
---- openerp/osv/fields.py	2013-01-11 17:57:17 +0000
-+++ openerp/osv/fields.py	2013-03-18 02:13:59 +0000
-@@ -50,6 +50,7 @@
+--- openerp/osv/fields.py	2014-02-13 10:08:36 +0000
++++ openerp/osv/fields.py	2014-02-20 09:49:19 +0000
+@@ -50,9 +50,12 @@
  from openerp.tools import html_sanitize
  import simplejson
  from openerp import SUPERUSER_ID
@@ -9,7 +9,12 @@
  
  _logger = logging.getLogger(__name__)
  
-@@ -384,29 +385,48 @@
++IMG_CACH = {}
++
+ def _symbol_set(symb):
+     if symb is None or symb == False:
+         return None
+@@ -386,29 +389,91 @@
      _classic_read = False
      _prefetch = False
  
@@ -26,7 +31,7 @@
 +        self.store = store
 +        if store =='s3':
 +            self._classic_write = False
-+            self._symbol_set = (self._symbol_c, self.set)
++            #self._symbol_set = (self._symbol_c, self.set)
 +            self._symbol_get = None
 +
 +    def set(self, cr, obj, id, name, value, user=None, context=None):
@@ -34,44 +39,86 @@
 +                                      user=user, context=context)
 +
 +        if self.store != 's3' or not value or not connection_check:
-+            cr.execute('update ' + obj._table + ' set'
++            cr.execute('update ' + obj._table + ' set '
 +                       + name + '=' + self._symbol_set[0] + ' where id=%s',
 +                       (self._symbol_set[1](value), id))
 +        else:
 +            encrypt_filename = s3_interface.s3_set_file(cr,
 +                                obj, id, name, value, user=user,
 +                                context=context)
++            key = (obj, id, name)
++            IMG_CACH[key] = base64.decodestring(value)
 +
-+    def get(self, cr, obj, ids, name, user=SUPERUSER_ID, context={}, 
++    def get(self, cr, obj, ids, name, user=SUPERUSER_ID, context={},
 +                                                            values=[]):
          res = {}
-+        connection_check = s3_interface.connection_test(cr, obj, id, name,
-+                                      user=user, context=context)
++        connection_check = False
++        
++        if self.store == 's3':
++            connection_check = s3_interface.connection_test(cr, obj, id, name,
++                        user=user, context=context)
++
          for i in ids:
              val = None
 -            for v in values:
 -                if v['id'] == i:
 -                    val = v[name]
 -                    break
--
++            check_size = True
++            data = False
++            key = (obj, i, name)
++            if key in IMG_CACH:
++                data = IMG_CACH[key]
++            if self.store != 's3' or not connection_check:
++                for v in values:
++                    if v['id'] == i and v.has_key(name):
++                        val = v[name]
++                        break
++                    if v['id'] == i and 'name' not in v:
++                        check_size = False
++                        cr.execute('select  ' + name + ' from '  + obj._table +
++                                   ' where id=%s',(i,))
++                        sql_data = cr.fetchone()
++                        val = str(sql_data[0])
++                        if val and val not in ('None', 'f', 'False'):
++                            res[i] = val
++                        else:
++                            res[i] = ''
++                            val = ''
++                        break
+ 
 -            # If client is requesting only the size of the field, we return it instead
 -            # of the content. Presumably a separate request will be done to read the actual
 -            # content if it's needed at some point.
 -            # TODO: after 6.0 we should consider returning a dict with size and content instead of
 -            #       having an implicit convention for the value
 -            if val and context.get('bin_size_%s' % name, context.get('bin_size')):
-+            if self.store != 's3' or not connection_check:
-+                for v in values:
-+                    if v['id'] == i and v.has_key(name):
-+                        val = v[name]
-+                        break
 +            else:
-+                data = s3_interface.s3_get_file(cr, obj, i, name, user=user,
++                if not data:
++                    data = s3_interface.s3_get_file(cr, obj, i, name, user=user,
 +                                                context=context, values=values)
++                    if data:
++                        
++                        IMG_CACH[key] = data
++                        file_f = open("/tmp/tt.jpg",'w')
++                        file_f.write(data)
++                        file_f.close()
++                if not data:
++                    cr.execute('select  ' + name + ' from '  + obj._table +
++                               ' where id=%s',(i,))
++                    sql_data = cr.fetchone()
++                    val = str(sql_data[0])
++                    if val and val not in ('None', 'f', 'False'):
++                        res[i] = val
++                    else:
++                        res[i] = ''
++                        val = ''
++                    continue
++                
 +                val = base64.encodestring(data)
 +                res[i] = val
 +                continue
-+            if val and context.get('bin_size_%s' % name,
++            if val and check_size and context.get('bin_size_%s' % name,
 +                                   context.get('bin_size')):
                  res[i] = tools.human_size(long(val))
              else:
