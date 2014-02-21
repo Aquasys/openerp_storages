@@ -4,7 +4,9 @@
 
 # Copyright (C) 20012-2013.
 
-#
+#- Aquasys G.K. for funding development
+#- Hinesh  - Developer
+#- BIZZAPPDEV  - Developer
 
 # This program is free software: you can redistribute it and/or modify
 
@@ -32,7 +34,7 @@
 #########################################################################
 {
     'name': 'External Storage',
-    'version': '0.3.1',
+    'version': '1.0',
     'category': 'Interface',
     'summary': 'AWS S3 and FTP storage for attachment files',
     'description': """

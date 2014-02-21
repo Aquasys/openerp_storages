@@ -46,7 +46,9 @@ class product_product(osv.osv):
 
     def _set_image(self, cr, uid, id, name, value, args, context=None):
         return self.write(cr, uid, [id],
-                          {'image': tools.image_resize_image_big(value)},
+                          {'image': tools.image_resize_image_big(value,
+                                                         filetype='JPEG')},
+
                           context=context)
 
     _columns = {
@@ -75,5 +77,6 @@ class product_product(osv.osv):
                                        "ratio preserved. Use this field "
                                        "anywhere a small image is required."),
     }
+
 product_product()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
