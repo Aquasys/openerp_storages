@@ -1,23 +1,23 @@
 === modified file 'openerp/osv/fields.py'
 --- openerp/osv/fields.py	2014-02-13 10:08:36 +0000
-+++ openerp/osv/fields.py	2014-02-20 09:49:19 +0000
++++ openerp/osv/fields.py	2014-02-21 07:30:42 +0000
 @@ -50,9 +50,12 @@
  from openerp.tools import html_sanitize
  import simplejson
  from openerp import SUPERUSER_ID
 +import s3_interface
-
+ 
  _logger = logging.getLogger(__name__)
-
+ 
 +IMG_CACH = {}
 +
  def _symbol_set(symb):
      if symb is None or symb == False:
          return None
-@@ -386,29 +389,91 @@
+@@ -386,29 +389,87 @@
      _classic_read = False
      _prefetch = False
-
+ 
 -    def __init__(self, string='unknown', filters=None, **args):
 +    def __init__(self, string='unknown', filters=None, store='s3', **args):
          _column.__init__(self, string=string, **args)
@@ -64,6 +64,13 @@
 -                if v['id'] == i:
 -                    val = v[name]
 -                    break
+-
+-            # If client is requesting only the size of the field, we return it instead
+-            # of the content. Presumably a separate request will be done to read the actual
+-            # content if it's needed at some point.
+-            # TODO: after 6.0 we should consider returning a dict with size and content instead of
+-            #       having an implicit convention for the value
+-            if val and context.get('bin_size_%s' % name, context.get('bin_size')):
 +            check_size = True
 +            data = False
 +            key = (obj, i, name)
@@ -76,8 +83,8 @@
 +                        break
 +                    if v['id'] == i and 'name' not in v:
 +                        check_size = False
-+                        cr.execute('select  ' + name + ' from '  + obj._table +
-+                                   ' where id=%s',(i,))
++                        cr.execute('select  {0} from {1} where id={2}'.format(
++                            name, obj._table, i))
 +                        sql_data = cr.fetchone()
 +                        val = str(sql_data[0])
 +                        if val and val not in ('None', 'f', 'False'):
@@ -86,23 +93,16 @@
 +                            res[i] = ''
 +                            val = ''
 +                        break
-
--            # If client is requesting only the size of the field, we return it instead
--            # of the content. Presumably a separate request will be done to read the actual
--            # content if it's needed at some point.
--            # TODO: after 6.0 we should consider returning a dict with size and content instead of
--            #       having an implicit convention for the value
--            if val and context.get('bin_size_%s' % name, context.get('bin_size')):
++
 +            else:
 +                if not data:
 +                    data = s3_interface.s3_get_file(cr, obj, i, name, user=user,
 +                                                context=context, values=values)
 +                    if data:
-+
 +                        IMG_CACH[key] = data
 +                if not data:
-+                    cr.execute('select  ' + name + ' from '  + obj._table +
-+                               ' where id=%s',(i,))
++                    cr.execute('select  {0} from {1} where id={2}'.format(
++                            name, obj._table, i))
 +                    sql_data = cr.fetchone()
 +                    val = str(sql_data[0])
 +                    if val and val not in ('None', 'f', 'False'):
