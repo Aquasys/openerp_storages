@@ -23,5 +23,4 @@ Feature: Define an AWS S3 storage target
 
     Examples:
         | key_id               | secret_key                               |
-        | AKIAJRZJLHNEGIQI6QNQ | xaGmFLK7SCq5+M6VvcXOuh3qtF40bz0av2G/fnuJ |
         | bad_key_id           | bad_secret_key                           |
