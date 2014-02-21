@@ -34,7 +34,7 @@
 #########################################################################
 {
     'name': 'External Storage',
-    'version': '0.3.1',
+    'version': '1.0',
     'category': 'Interface',
     'summary': 'AWS S3 and FTP storage for attachment files',
     'description': """
